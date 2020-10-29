@@ -23,22 +23,24 @@ var opts = {
         }
     }
 };
+server.register(require('fastify-cors'), {
+// Hmm
+});
 server.register(function (instance, options, next) {
-    // the route will be '/english/hello'
     instance.get('/list', opts, function (req, reply) {
+        console.log('/list');
         return todoRepo.listTodos();
     });
     next();
 }, { prefix: '/todo' });
 server.register(function (instance, options, next) {
-    // the route will be '/italian/hello'
     instance.get('/list', opts, function (req, reply) {
         reply.send({ greet: 'user_list' });
     });
     next();
 }, { prefix: '/user' });
 // Run the server!
-server.listen(3000, function (err) {
+server.listen(8080, function (err) {
     if (err) {
         console.error(err);
         process.exit(1);

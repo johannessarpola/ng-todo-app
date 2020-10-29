@@ -70,7 +70,6 @@ function _listTodos(pool) {
                     ret = client.query('SELECT * from todos')
                         .then(function (res) {
                         var todos = res.rows.map(function (row) {
-                            console.log(row);
                             return row.data;
                         });
                         return todos;

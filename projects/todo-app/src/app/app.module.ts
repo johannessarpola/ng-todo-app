@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TodoApiService } from 'todo-api';
+import { TodoApiServiceConfiguration, TodoApiService } from 'todo-api';
+import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -11,9 +13,20 @@ import { TodoApiService } from 'todo-api';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: TodoApiServiceConfiguration,
+      useFactory: getTodoApiConfiguration,
+    },
+    TodoApiService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function getTodoApiConfiguration(): TodoApiServiceConfiguration {
+  return new TodoApiServiceConfiguration(environment.todoApiUrl, environment.todoApiPort);
+};

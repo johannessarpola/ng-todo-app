@@ -3,6 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  todoApiUrl: 'localhost',
+  todoApiPort: '8080',
   production: false
 };
 
