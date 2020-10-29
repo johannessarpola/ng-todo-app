@@ -24,11 +24,10 @@ var opts = {
     }
 };
 server.register(require('fastify-cors'), {
-// Hmm
+// TODO Maybe add options at some point?
 });
 server.register(function (instance, options, next) {
     instance.get('/list', opts, function (req, reply) {
-        console.log('/list');
         return todoRepo.listTodos();
     });
     next();
