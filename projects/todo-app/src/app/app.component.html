@@ -1,19 +1,5 @@
 
 <h1> Stuff to do </h1>
 <div *ngFor="let todo of todos | async;">
-  <div>
-    <h2>{{todo.title}}</h2>
-  </div>
-  <div>
-    <p>{{todo.title}}</p>
-  </div>
-  <div>
-    <p *ngIf="todo.done">
-      Done!
-    </p>
-    <p *ngIf="!todo.done">
-      Not done!
-    </p>
-  </div>
-
+  <tuc-todo [todo]=todo></tuc-todo>
 </div>

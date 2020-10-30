@@ -20,9 +20,16 @@
         "dist/todo-api/todo-api",
         "dist/todo-api"
       ],
-      // This is required for VsCode to not complain
       "todo-api/*": [
         "dist/todo-api/*"
+      ],
+      "todo-components": [
+        "dist/todo-components/todo-components",
+        "dist/todo-components"
+      ],
+      "todo-ui-components": [
+        "dist/todo-ui-components/todo-ui-components",
+        "dist/todo-ui-components"
       ]
     }
   }

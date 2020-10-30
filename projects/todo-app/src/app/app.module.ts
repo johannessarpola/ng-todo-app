@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { TodoApiServiceConfiguration, TodoApiService } from 'todo-api';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { TodoUiComponentsModule } from 'projects/todo-ui-components/src/public-api';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    TodoUiComponentsModule
   ],
   providers: [
     {

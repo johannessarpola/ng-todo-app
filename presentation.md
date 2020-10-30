@@ -7,7 +7,7 @@ It has been greatly improved with the Angula 6 and onwards. There are still some
 
 
 
-## Libraries
+## Libraries and why to use them
 
 Libraries are built separately and contain `public-api.ts` definition which contain the public API surface for the functionality. Often they're built into `/dist/` folder and for local development they're linked with paths with `tsconfig.json`. Libraries can the be referenced from the application code for example in components with following way `import { Todo, TodoApiService } from 'todo-api';`. Due note that it should be `todo-api` and nothing else even though some IDEs
 like VsCode try to suggest using paths like `projects/todo-api/src/lib/todo-api.service` which will not work. Idea is that library is used from the code like any other package dependency, which are libraries. 
@@ -24,6 +24,21 @@ But since it is so easy to separate functionality into a separate library later 
 projects require copy-pasting code.
 
 If a organization has a own npm registry these libraries can be published there and used like any other package from npm repository, of course they could be public as well but in most cases its not relevant with proprietary solutions for customers.
+
+In a perfect world they should encourage more code reusability and allow for maintaining different versions of APIs with ease for example since the dependencies can be versioned for specific to specific ones like other NPM packages. They could help with copy-pasting code between different projects as well.
+
+Pros:
+- Encourages reusability
+- Encourages modular design
+- Can version to a specific version
+- Might make programming easier to parallelize between teams and people.
+- Allows for [monorepo](https://en.wikipedia.org/wiki/Monorepo) development as it might be simpler than having multiple repositories for all microservices for example.
+
+Cons
+- Development workflow is not as streamlined as developing everything under single application. Mainly
+because at the moment the tools at least on Windows do not work that well together. (Will be expanded later)
+- Might increase complexity when versioning is introduced.
+- [monorepo](https://en.wikipedia.org/wiki/Monorepo) development (?)
 
 ## How-to
 
@@ -112,7 +127,7 @@ Angular creates the library service templates with following annotation:
     @Injectable({
       providedIn: 'root'
     })
-````
+```
 and at it seems to cause a bizarre error 
 ```
 ERROR: Internal error: unknown identifier []
