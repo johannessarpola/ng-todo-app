@@ -1,4 +1,5 @@
 // Require the framework and instantiate it
+import { Console } from 'console';
 import fastify from 'fastify'
 import * as fs from 'fs';
 import { Pool } from 'pg';
@@ -39,7 +40,7 @@ server.register((instance, options, next) => {
 
     instance.post<{
       Headers: TodoCreateHeaders
-      Body: TodoCreateBody
+      Body: TodoCreateBody,
     }>('/create', (req, reply) => {
       console.log(req);
       const headers: TodoCreateHeaders = req.headers;
@@ -48,7 +49,7 @@ server.register((instance, options, next) => {
       const newTodo: Todo = {
         title: todo.title,
         description: todo.description || '',
-        done: todo.done || false
+        done: todo.done || false,
       } as Todo
 
       return todoRepo.addTodos([newTodo]);

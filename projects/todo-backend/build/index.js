@@ -3,7 +3,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Require the framework and instantiate it
 var fastify_1 = __importDefault(require("fastify"));
 var pg_1 = require("pg");
 var db_1 = require("./db");
@@ -37,7 +36,7 @@ server.register(function (instance, options, next) {
         var newTodo = {
             title: todo.title,
             description: todo.description || '',
-            done: todo.done || false
+            done: todo.done || false,
         };
         return todoRepo.addTodos([newTodo]);
     });
