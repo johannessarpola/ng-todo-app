@@ -23,13 +23,12 @@
       "todo-api/*": [
         "dist/todo-api/*"
       ],
-      "todo-components": [
-        "dist/todo-components/todo-components",
-        "dist/todo-components"
-      ],
       "todo-ui-components": [
         "dist/todo-ui-components/todo-ui-components",
         "dist/todo-ui-components"
+      ],
+      "todo-ui-components/*": [
+        "dist/todo-ui-components/*"
       ]
     }
   }

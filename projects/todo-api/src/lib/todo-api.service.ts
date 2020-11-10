@@ -23,12 +23,12 @@ export class TodoApiService {
 
   }
 
-  public createTodos(todo: Todo){
-    this.http.post<Todo>(`${this.address}/todo/create`).pipe(
+  public createTodo(todo: Todo): Observable<string> {
+    return this.http.post<string>(`${this.address}/todo/create`, todo).pipe(
       catchError((e) => {
         console.error(e);
-        return {} // TODO?
+        return "" // TODO?
       })
-    )
+    );
   }
 }

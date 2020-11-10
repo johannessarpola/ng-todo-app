@@ -3,3 +3,10 @@
 <div *ngFor="let todo of todos | async;">
   <tuc-todo [todo]=todo></tuc-todo>
 </div>
+
+
+<button (click)="newTodo()"></button>
+
+<div *ngFor="let todo of savedTodos | async;">
+  <tuc-todo [todo]=todo></tuc-todo>
+</div>

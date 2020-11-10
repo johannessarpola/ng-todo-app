@@ -36,9 +36,7 @@
               "projects/todo-api/tsconfig.lib.json",
               "projects/todo-api/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -63,9 +61,7 @@
               "projects/todo-app/src/favicon.ico",
               "projects/todo-app/src/assets"
             ],
-            "styles": [
-              "projects/todo-app/src/styles.css"
-            ],
+            "styles": ["projects/todo-app/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -127,9 +123,7 @@
               "projects/todo-app/src/favicon.ico",
               "projects/todo-app/src/assets"
             ],
-            "styles": [
-              "projects/todo-app/src/styles.css"
-            ],
+            "styles": ["projects/todo-app/src/styles.css"],
             "scripts": []
           }
         },
@@ -141,9 +135,7 @@
               "projects/todo-app/tsconfig.spec.json",
               "projects/todo-app/e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -193,9 +185,7 @@
               "projects/todo-components/tsconfig.lib.json",
               "projects/todo-components/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -233,12 +223,11 @@
               "projects/todo-ui-components/tsconfig.lib.json",
               "projects/todo-ui-components/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
-    }},
-  "defaultProject": "todo-api"
+    }
+  },
+  "defaultProject": "todo-app"
 }
