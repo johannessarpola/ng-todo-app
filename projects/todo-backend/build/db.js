@@ -37,24 +37,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 function _addTodo(todo, client) {
     return __awaiter(this, void 0, void 0, function () {
-        var queryText, insertId, err_1;
+        var queryText, insertId;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    // TODO Probably batch better (https://github.com/brianc/node-postgres/issues/957#issuecomment-295583050)
+                    console.log('inserting todo:');
+                    console.log(todo);
                     return [4 /*yield*/, client.query('BEGIN')];
                 case 1:
                     _a.sent();
                     queryText = 'INSERT INTO todos(created, data) VALUES($1, $2) RETURNING id';
                     insertId = client
                         .query(queryText, [new Date(), todo])
-                        .then(function (res) { return res.rows[0].toString(); });
+                        .then(function (res) { return res.rows[0].id.toString(); });
                     return [2 /*return*/, insertId];
-                case 2:
-                    err_1 = _a.sent();
-                    console.error('failure!', err_1);
-                    throw err_1;
-                case 3: return [2 /*return*/];
             }
         });
     });
@@ -67,7 +64,8 @@ function _listTodos(pool) {
                 case 0: return [4 /*yield*/, pool.connect()];
                 case 1:
                     client = _a.sent();
-                    ret = client.query('SELECT * from todos')
+                    ret = client
+                        .query('SELECT * from todos')
                         .then(function (res) {
                         var todos = res.rows.map(function (row) {
                             return row.data;
@@ -76,6 +74,7 @@ function _listTodos(pool) {
                     })
                         .catch(function (e) {
                         console.error(e.stack);
+                        return [];
                     });
                     return [2 /*return*/, ret];
             }
@@ -84,7 +83,7 @@ function _listTodos(pool) {
 }
 function _addTodos(todos, pool) {
     return __awaiter(this, void 0, void 0, function () {
-        var ids, client, err_2;
+        var ids, client, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -97,18 +96,16 @@ function _addTodos(todos, pool) {
                     _a.trys.push([2, 4, 5, 6]);
                     todos.forEach(function (todo, i) {
                         var id = _addTodo(todo, client);
-                        if (id != null) {
-                            ids.push(id);
-                        }
+                        ids.push(id);
                     });
                     return [4 /*yield*/, client.query('COMMIT')];
                 case 3:
                     _a.sent();
                     return [3 /*break*/, 6];
                 case 4:
-                    err_2 = _a.sent();
-                    console.error('failure!', err_2);
-                    throw err_2;
+                    err_1 = _a.sent();
+                    console.error('failure!', err_1);
+                    throw err_1;
                 case 5:
                     client.release();
                     return [7 /*endfinally*/];

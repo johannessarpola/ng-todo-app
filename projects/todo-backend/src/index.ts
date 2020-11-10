@@ -5,6 +5,10 @@ import { Pool } from 'pg';
 import { TodoRepository } from './db';
 import { Todo } from './models/todo';
 
+import { Create as TodoCreateBody } from './types/todo/create/body'
+import { Headers as TodoCreateHeaders } from './types/todo/create/headers'
+
+
 const pool = new Pool({
     user: 'todo_admin',
     database: 'tododb',
@@ -24,7 +28,7 @@ const opts = {
     }
 }
 
-server.register(require('fastify-cors'), { 
+server.register(require('fastify-cors'), {
     // TODO Maybe add options at some point?
 })
 
@@ -32,6 +36,23 @@ server.register((instance, options, next) => {
     instance.get('/list', opts, (req, reply) => {
         return todoRepo.listTodos();
     });
+
+    instance.post<{
+      Headers: TodoCreateHeaders
+      Body: TodoCreateBody
+    }>('/create', (req, reply) => {
+      console.log(req);
+      const headers: TodoCreateHeaders = req.headers;
+      const todo: TodoCreateBody = req.body;
+
+      const newTodo: Todo = {
+        title: todo.title,
+        description: todo.description || '',
+        done: todo.done || false
+      } as Todo
+
+      return todoRepo.addTodos([newTodo]);
+  });
     next();
 }, { prefix: '/todo' });
 

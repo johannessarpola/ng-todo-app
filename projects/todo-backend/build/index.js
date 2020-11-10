@@ -30,6 +30,17 @@ server.register(function (instance, options, next) {
     instance.get('/list', opts, function (req, reply) {
         return todoRepo.listTodos();
     });
+    instance.post('/create', function (req, reply) {
+        console.log(req);
+        var headers = req.headers;
+        var todo = req.body;
+        var newTodo = {
+            title: todo.title,
+            description: todo.description || '',
+            done: todo.done || false
+        };
+        return todoRepo.addTodos([newTodo]);
+    });
     next();
 }, { prefix: '/todo' });
 server.register(function (instance, options, next) {

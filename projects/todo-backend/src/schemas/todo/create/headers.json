@@ -1,0 +1,9 @@
+{
+  "title": "Headers",
+  "type": "object",
+  "properties": {
+    "Custom-Header": { "type": "string" }
+  },
+  "additionalProperties": false,
+  "required": []
+}

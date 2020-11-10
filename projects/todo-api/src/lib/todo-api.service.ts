@@ -7,15 +7,28 @@ import { Todo, TodoApiServiceConfiguration } from './todo-api-models';
 @Injectable()
 export class TodoApiService {
 
-  constructor(private http: HttpClient, private todoConf: TodoApiServiceConfiguration) {}
+  address: string
+
+  constructor(private http: HttpClient, private todoConf: TodoApiServiceConfiguration) {
+    this.address = `http://${this.todoConf.host}:${this.todoConf.port}/`
+  }
 
   public searchTodos(query: string, pageSize: number, page: number): Observable<Todo[]> {
-    return this.http.get<Todo[]>(`http://${this.todoConf.host}:${this.todoConf.port}/todo/list`).pipe(
-      catchError( (e) => { 
+    return this.http.get<Todo[]>(`${this.address}/todo/list`).pipe(
+      catchError( (e) => {
         console.error(e);
         return [];
       })
     );
 
+  }
+
+  public createTodos(todo: Todo){
+    this.http.post<Todo>(`${this.address}/todo/create`).pipe(
+      catchError((e) => {
+        console.error(e);
+        return {} // TODO?
+      })
+    )
   }
 }
