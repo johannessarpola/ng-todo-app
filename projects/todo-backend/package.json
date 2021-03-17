@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node build/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "compile-schemas": "json2ts -i src/schemas -o src/types"
   },
   "author": "",
@@ -19,7 +19,11 @@
     "pg": "^8.4.2"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.13.0",
+    "@types/jest": "^26.0.20",
     "@types/node": "^14.14.5",
+    "jest": "^26.6.3",
+    "testcontainers": "^7.5.0",
     "tslint": "^5.12.1",
     "typescript": "^3.3.3"
   }
