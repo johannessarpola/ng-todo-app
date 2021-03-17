@@ -19,14 +19,11 @@ describe("GenericContainer", () => {
   });
   
 
-  test('add todo', async () => {
+  test('add todo', () => {
     const todo: Todo = {title: "Testing is fun", description: "Yeboi", done: true}
-    const insert = await todoRepo.addTodos([todo]);
-    const todos = await todoRepo.listTodos();
-
-    console.log("paska")
-    expect(insert.length).toEqual(1);
-    expect(todos.length).toEqual(1);
+    return todoRepo.addTodos([todo]).then(data => {
+      expect(data.length).toEqual(1);
+    });
   })
 });
 

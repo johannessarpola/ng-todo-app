@@ -2,7 +2,7 @@ import { Todo } from './models/todo';
 import { PostgreSQLAdapter } from './postgresql/postgresql.adapter';
 
 async function _addTodo(todo: Todo, adapter: PostgreSQLAdapter): Promise<string> {
-  // TODO Probably batch better (https://github.com/brianc/node-postgres/issues/957#issuecomment-295583050)
+  // TODO Use multipleQueryInTransaction
   console.log('inserting todo:');
   console.log(todo);
   await adapter.query('BEGIN');
@@ -16,7 +16,7 @@ async function _addTodo(todo: Todo, adapter: PostgreSQLAdapter): Promise<string>
 }
 
 async function _listTodos(adapter: PostgreSQLAdapter): Promise<Todo[]> {
-  await adapter.connect();
+//  await adapter.connect();
 
   const ret: Promise<Todo[]> = adapter
     .query('SELECT * from todos')
@@ -36,7 +36,7 @@ async function _listTodos(adapter: PostgreSQLAdapter): Promise<Todo[]> {
 
 async function _addTodos(todos: Todo[], adapter: PostgreSQLAdapter): Promise<string[]> {
   let ids: Promise<string>[] = [];
-  await adapter.connect();
+  // await adapter.connect();
   try {
     todos.forEach((todo, i) => {
       const id: Promise<string> = _addTodo(todo, adapter);
