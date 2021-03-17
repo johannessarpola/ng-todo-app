@@ -5,6 +5,8 @@ import * as fs from 'fs';
 import { Pool } from 'pg';
 import { TodoRepository } from './db';
 import { Todo } from './models/todo';
+import {PostgreSQLAdapter} from './postgresql/postgresql.adapter';
+
 
 import { Create as TodoCreateBody } from './types/todo/create/body'
 import { Headers as TodoCreateHeaders } from './types/todo/create/headers'
@@ -17,7 +19,7 @@ const pool = new Pool({
 });
 
 const server = fastify();
-const todoRepo = new TodoRepository(pool);
+const todoRepo = new TodoRepository(new PostgreSQLAdapter({ uri: 'localhost' })); // FIXME
 
 const opts = {
     schema: {

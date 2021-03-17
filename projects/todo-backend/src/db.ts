@@ -1,27 +1,27 @@
-import { Pool, PoolClient } from 'pg';
 import { Todo } from './models/todo';
+import { PostgreSQLAdapter } from './postgresql/postgresql.adapter';
 
-async function _addTodo(todo: Todo, client: PoolClient): Promise<string> {
+async function _addTodo(todo: Todo, adapter: PostgreSQLAdapter): Promise<string> {
   // TODO Probably batch better (https://github.com/brianc/node-postgres/issues/957#issuecomment-295583050)
   console.log('inserting todo:');
   console.log(todo);
-  await client.query('BEGIN');
+  await adapter.query('BEGIN');
   const queryText =
     'INSERT INTO todos(created, data) VALUES($1, $2) RETURNING id';
-  const insertId: Promise<string> = client
+  const insertId: Promise<string> = adapter
     .query(queryText, [new Date(), todo])
-    .then((res) => res.rows[0].id.toString());
+    .then((res: any) => res.rows[0].id.toString());
 
   return insertId;
 }
 
-async function _listTodos(pool: Pool): Promise<Todo[]> {
-  const client: PoolClient = await pool.connect();
+async function _listTodos(adapter: PostgreSQLAdapter): Promise<Todo[]> {
+  await adapter.connect();
 
-  const ret: Promise<Todo[]> = client
+  const ret: Promise<Todo[]> = adapter
     .query('SELECT * from todos')
     .then((res) => {
-      const todos = res.rows.map((row) => {
+      const todos = res.rows.map((row: any) => {
         return row.data as Todo;
       });
 
@@ -34,36 +34,31 @@ async function _listTodos(pool: Pool): Promise<Todo[]> {
   return ret;
 }
 
-async function _addTodos(todos: Todo[], pool: Pool): Promise<string[]> {
+async function _addTodos(todos: Todo[], adapter: PostgreSQLAdapter): Promise<string[]> {
   let ids: Promise<string>[] = [];
-  const client: PoolClient = await pool.connect();
+  await adapter.connect();
   try {
     todos.forEach((todo, i) => {
-      const id: Promise<string> = _addTodo(todo, client);
+      const id: Promise<string> = _addTodo(todo, adapter);
       ids.push(id);
     });
-    await client.query('COMMIT');
+    await adapter.query('COMMIT');
   } catch (err) {
     console.error('failure!', err);
     throw err;
-  } finally {
-    client.release();
-  }
+  } 
 
   return Promise.all(ids);
 }
 
 export class TodoRepository {
-  private pool: Pool;
-  public constructor(pool: Pool) {
-    this.pool = pool;
-  }
+  constructor(private readonly adapter: PostgreSQLAdapter) {}
 
   public addTodos(todos: Todo[]): Promise<string[]> {
-    return _addTodos(todos, this.pool);
+    return _addTodos(todos, this.adapter);
   }
 
   public listTodos(): Promise<Todo[]> {
-    return _listTodos(this.pool);
+    return _listTodos(this.adapter);
   }
 }

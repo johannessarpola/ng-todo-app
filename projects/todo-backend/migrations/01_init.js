@@ -1,8 +1,10 @@
+const { PgLiteral } = require('node-pg-migrate');
+
 exports.up = (pgm) => {
-  pgm.createTable('users', {
+  pgm.createTable('todos', {
     id: {
       type: 'uuid',
-      default: 'uuid_generate_v4()',
+      default: new PgLiteral('uuid_generate_v4()'),
       notNull: true,
       primaryKey: true
     },
