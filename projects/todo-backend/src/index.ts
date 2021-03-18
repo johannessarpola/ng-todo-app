@@ -3,7 +3,7 @@ import { Console } from 'console';
 import fastify from 'fastify'
 import * as fs from 'fs';
 import { Pool } from 'pg';
-import { TodoRepository } from './db';
+import { TodoRepository } from './todo.repository';
 import { Todo } from './models/todo';
 import {PostgreSQLAdapter} from './postgresql/postgresql.adapter';
 

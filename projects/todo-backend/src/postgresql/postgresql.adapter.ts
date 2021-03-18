@@ -1,10 +1,10 @@
-import {Pool, QueryResult} from 'pg';
-import {PostgreSQLConfig} from './postgresql.config'
+import { Pool, QueryArrayResult, QueryResult } from 'pg';
+import { PostgreSQLConfig } from './postgresql.config'
 
 export class PostgreSQLAdapter {
   private pool: Pool | undefined;
 
-  constructor(private readonly config: PostgreSQLConfig) {}
+  constructor(private readonly config: PostgreSQLConfig) { }
 
   public async query<T>(
     query: string,
@@ -30,6 +30,11 @@ export class PostgreSQLAdapter {
     } finally {
       client.release();
     }
+  }
+
+
+  public async querySelect<T>(query: Query): Promise<QueryResult<T>> {
+    return this.query(query.sql, query.params);
   }
 
   public async connect(): Promise<void> {
